@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.training.myrestapi.methodes.CalculatePI;
+import com.training.myrestapi.methodes.HanoiTower;
 import com.training.myrestapi.methodes.NombreComplexe;
 
 @RestController
@@ -41,5 +42,11 @@ public class MonAPIController {
        
 
         return "La somme des deux nombres est : " + real +" + " +imag+"i";
+	}
+	
+	@GetMapping(value="/tours-hanoi") 
+	public String calculStepHanoiTower(@RequestParam("nbDisk") int nbDisk) {
+		int nbShift = HanoiTower.nbStepShift(nbDisk, "Right", "Middle", "Left");
+		return "Shift number : " + nbShift;  
 	}
 }
