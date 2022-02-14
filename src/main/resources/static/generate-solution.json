@@ -1,0 +1,38 @@
+[
+    {
+        "nbDisk" : 1,
+        "start" : "A",
+        "end" : "C"
+    },
+    {
+        "nbDisk" : 2,
+        "start" : "A",
+        "end" : "B"
+    },
+    {
+        "nbDisk" : 1,
+        "start" : "C",
+        "end" : "B"
+    },
+    {
+        "nbDisk" : 3,
+        "start" : "A",
+        "end" : "C"
+    },
+    {
+        "nbDisk" : 1,
+        "start" : "B",
+        "end" : "A"
+    },
+    {
+        "nbDisk" : 2,
+        "start" : "B",
+        "end" : "C"
+    },
+    {
+        "nbDisk" : 1,
+        "start" : "A",
+        "end" : "C"
+    }
+    
+]

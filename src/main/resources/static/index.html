@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Hanoi Tower</title>
+		<style>
+			html {
+				background: #CCF;
+			}
+			.hanoi {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				height: 450px;
+				width: 600px;
+				position: relative;
+				margin: auto;
+			}
+			.tower {
+				position: relative;
+				cursor: pointer;
+			}
+			.tower:hover {
+				background: #99F;
+			}
+			.tower::after {
+				content: " ";
+				display: block;
+				position: absolute;
+				width: 20px;
+				height: 200px;
+				bottom: 0;
+				left: 90px;
+				background: #600;
+				border-radius: 10px 10px 0 0;
+			}
+			.disk {
+				position: absolute;
+				background: linear-gradient(0deg,#F00,#600);
+				height: 35px;
+				width: 180px;
+				border-radius: 15px;
+				margin-left: 10px;
+				z-index: 2;
+				transition: left .2s, bottom .2s .2s;
+				pointer-events: none;
+			}
+			.d1 { width: 60px; margin-left: 70px }
+			.d2 { width: 90px; margin-left: 55px }
+			.d3 { width: 120px; margin-left: 40px }
+			.d4 { width: 150px; margin-left: 25px }
+			.t1 { left: 0px; }
+			.t2 { left: 200px; }
+			.t3 { left: 400px; }
+			.p1 { bottom: 0px; }
+			.p2 { bottom: 35px; }
+			.p3 { bottom: 70px; }
+			.p4 { bottom: 105px; }
+			.p5 { bottom: 140px; }
+			.p0 { bottom: 350px; }
+		</style>
+	</head>
+	<body>
+		<div class="hanoi">
+			<div class="disk d1"></div>
+			<div class="disk d2"></div>
+			<div class="disk d3"></div>
+			<div class="disk d4"></div>
+			<div class="disk d5"></div>
+			<div class="tower" onclick="clickTower(0)"></div>
+			<div class="tower" onclick="clickTower(1)"></div>
+			<div class="tower" onclick="clickTower(2)"></div>
+		</div>
+		<script>
+			let towers = [[5,4,3,2,1],[],[]];
+let positions = ['p1', 'p2', 'p3', 'p4', 'p5', 'p0', 't1', 't2', 't3'];
+let movements = [];
+function render() {
+    towers.forEach((tower, towerId) => {
+        tower.forEach((disk, position) => {
+            let d = document.querySelector('.d'+disk);
+            positions.forEach(position => {
+                d.classList.remove(position);
+            })
+            d.classList.add('t'+(towerId+1));
+            d.classList.add('p'+(position+1));
+        })
+    })
+}
+    
+function move(start, middle, end) {
+    if(!towers[start].length) {
+        return
+    }
+    let disk = towers[start].pop();
+    if(towers[start].length){
+        if(towers[end][towers[end].length]<disk) {
+            return toTowers[start].push(disk);
+        }
+    }
+    let d = document.querySelector('.d'+disk);
+    d.classList.add('p0');
+    towers[end].push(disk);
+    setTimeout(render,400);
+}
+
+function clickTower(n) {
+    if(movements.length && movements[0].length ==1) {
+        movements[0].push(n);
+    }
+    else {
+        movements.unshift([n]);
+    }
+}
+
+setInterval(() => {
+    if(movements.length && movements[movements.length-1].length==2) {
+        let m = movements.pop();
+        move(m[0], m[0], m[1]);
+    }
+}, 600)
+
+render()
+
+function solve(size, start, end) {
+    if(size ==1 ) {
+        return movements.unshift([start,end]);
+    }
+    let other = 3-start-end;
+    solve(size-1, start, other);
+    movements.unshift([start, end]);
+    console.log(movements);
+    solve(size-1, other, end)
+}
+
+setTimeout(() => { solve(5,0,1)}, 2000)
+		</script>
+	</body>
+</html>
